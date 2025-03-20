@@ -4,7 +4,7 @@ const concat = require('gulp-concat');
 
 const bundleAndMinifyJs = () => {
   return src([
-    'src/**.js',
+    'src/**/**.js',
     '!src/index.js'
   ])
     .pipe(minifyJs())
@@ -19,7 +19,7 @@ exports.build = build;
 
 const dev = () => {
   watch([
-    'src/**.js',
+    'src/**/**.js',
     '!src/index.js'
   ],
     series(bundleAndMinifyJs)

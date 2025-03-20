@@ -4,7 +4,7 @@ const fs = require('fs');
 const app = express();
 
 // Serve the "src" folder as static files under the "/js" path
-app.use('/js', express.static(path.join(process.cwd(), 'src')));
+app.use('/js', express.static(path.join(process.cwd(), 'build')));
 
 // Serve the "styles" folder as static files under the "/css" path
 app.use('/css', express.static(path.join(process.cwd(), 'src', 'styles')));
@@ -19,8 +19,8 @@ app.get('/main', (req, res) => {
             </head>
             <body>
                 <h1>JavaScript from Server</h1>
-                <div id='corel_container'></div>
-                <script src="/js/main.js"></script> <!-- Correct path -->
+                <div id='corel_container' data-skuId='489a8bef-d8f2-4af5-ac29-5fd24249c928' data-itemsFetched='20' data-imgSize='250-250' data-itemsPerPage='4' data-margin='10'></div>
+                <script src="/js/bundle.js"></script> <!-- Correct path -->
             </body>
         </html> 
     `);
