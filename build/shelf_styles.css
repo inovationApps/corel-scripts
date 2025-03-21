@@ -1,46 +1,58 @@
-.slider-container {
+.shelfWrapper {
   position: relative;
   width: 100%;
   max-width: 600px;
   margin: auto;
-  overflow: hidden;
+  overflow-x: hidden
 }
 
-.slider {
+.sliderContainer {
   display: flex;
+  overflow: hidden;
   transition: transform 0.5s ease;
+}	
+
+.shelfItem{
+  position: relative;
 }
 
-.slide {
-  min-width: 100%;
-  box-sizing: border-box;
-}
-
-.slide img {
+.shelfItemImage {
   width: 100%;
-  display: block;
+  height: auto;
+  display: flex;
+  aspect-ratio: 1;
 }
 
-button {
+.shelfItemLink {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px;
+  inset: 0;
+  z-index: 0
+}
+
+.dotsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.dot{
+  width: 5px;
+  height: 5px;
+  background-color: #ededed;
+  border-radius: 100%;
   cursor: pointer;
-  z-index: 10;
 }
-
-.prev {
-  left: 0;
+.dot.active{
+  background-color: #000;
 }
-
-.next {
+button{
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+}
+.prevButton{
+  right: 40px;
+}	
+.nextButton{
   right: 0;
-}
-
-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
+}	
