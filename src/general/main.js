@@ -3,7 +3,7 @@
 const baseUrl = 'https://api.cuboapp.net/';
 const scriptTag = document.currentScript;
 const tenantToken = scriptTag.getAttribute("data-token");
-console.log(tenantToken);	
+
 function main() {
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -14,7 +14,7 @@ function main() {
     }
     let counter = 0;
     const renderInterval = setInterval(async () => {
-      console.log(counter);
+
       const container = document.getElementById('corel_container');
       counter++;
 

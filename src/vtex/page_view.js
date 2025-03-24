@@ -14,12 +14,13 @@ const mainProductPageView = () => {
         "origin": origin
       })
     };
-    console.log(options.body);
+
     try {
-      const response = await fetch(`${baseUrl}v1/sessions`, options);//mudar endpoint
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      console.log('aqui sera o post pageview')
+      // const response = await fetch(`${baseUrl}v1/sessions`, options);//mudar endpoint
+      // if (!response.ok) {
+      //   throw new Error('Network response was not ok');
+      // }
     } catch (error) {
       console.error('Fetch error:', error);
     }

@@ -13,7 +13,7 @@ const getSession = async () => {
       throw new Error('Network response was not ok');
     }
     const result = await response.json();
-    console.log(result);
+
     return result.id;
   } catch (error) {
     console.error('Fetch error:', error);
@@ -30,13 +30,13 @@ const sendSession = async (sessionId, shelfViewed = false, version = '') => {
     },
     'body': JSON.stringify({
       // "tenantId": tenantToken,
-      "tenantId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      // "tenantId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       "externalId": sessionId,
       "externalTestId": version,
       "isShowcaseSeen": shelfViewed
     })
   };
-  console.log(options.body);
+  
   try {
     const response = await fetch(`${baseUrl}v1/sessions`, options);
     if (!response.ok) {
@@ -47,8 +47,8 @@ const sendSession = async (sessionId, shelfViewed = false, version = '') => {
   }
 };
 
-const sessionHandler = (sessionType) => {
-  const sessionId = getSession();
+const sessionHandler = async (sessionType) => {
+  const sessionId = await getSession();
   // const sessionId = '7fae9e4c-22ec-4993-8d51-063b62b35c6d';
   const sessionStorageSessionId = sessionStorage.getItem(sessionType);
   if (!sessionStorageSessionId || sessionStorageSessionId !== sessionId) {

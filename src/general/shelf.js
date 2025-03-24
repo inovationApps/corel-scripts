@@ -10,7 +10,7 @@ const getDataSetFromElement = (elementId) => {
 
 const fetchProducts = async () => {
   const { skuid, itemsfetched } = getDataSetFromElement('#corel_container');
-  console.log(skuid, itemsfetched);
+
   const options = {
     'method': 'GET',
     // 'mode': 'no-cors',
@@ -26,7 +26,6 @@ const fetchProducts = async () => {
       throw new Error('Network response was not ok');
     }
     const result = await response.json();
-    console.log(result);
 
     const promises = await Promise.allSettled([
       result
@@ -56,7 +55,7 @@ const observerHandler = () => {
 };
 
 const productViewHandler = (sku_id) => {
-  console.log('sku_id',sku_id);
+
   let hasTriggered = false;
   const sendView = async () => {
     sendInteraction(sku_id, 0);
@@ -65,7 +64,7 @@ const productViewHandler = (sku_id) => {
 
   return new IntersectionObserver((entries, observer) => {
     if (entries.find((x) => x.isIntersecting)?.isIntersecting == true && !hasTriggered) {
-      console.log('send item view');
+
       sendView();
       hasTriggered = true;
       observer.disconnect();
@@ -94,7 +93,7 @@ const sendInteraction = async (sku, eventType) => {
       "eventType": eventType
     })
   };
-  console.log(options.body);
+
   try {
     const response = await fetch(`${baseUrl}v1/sku-events`, options);
     if (!response.ok) {
