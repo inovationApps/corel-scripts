@@ -223,7 +223,7 @@ const initializeSlider = () => {
 
   const updateSlider = () => {
     const itemWidth = items[0].offsetWidth + margin;
-    const offset = -currentPage * itemWidth * itemsperpage;
+    const offset = -currentPage * (itemWidth + margin) * itemsperpage;
     slider.style.transform = `translateX(${offset}px)`;
     updateDots();
   };
