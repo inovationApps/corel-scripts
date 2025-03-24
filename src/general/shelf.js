@@ -210,16 +210,16 @@ const initializeSlider = () => {
 
   const styleSlider = (sliderElement) => {
     const containerWidth = Math.floor(sliderElement.parentElement.clientWidth);
-    // Make the container width divisible by itemsperpage
     const adjustedContainerWidth = Math.floor(containerWidth / itemsperpage) * itemsperpage;
     const itemWidth = Math.floor(adjustedContainerWidth / itemsperpage) - margin;
     
-    items.forEach(item => {
+    items.forEach((item, index) => {
       item.style.width = `${itemWidth}px`;
-      item.style.marginRight = `${margin}px`;
+      // Only apply margin if it's not the last item of a page
+      item.style.marginRight = (index + 1) % itemsperpage === 0 ? '0px' : `${margin}px`;
     });
     
-    const totalWidth = (itemWidth + margin) * totalItems;
+    const totalWidth = itemWidth * totalItems + margin * (totalItems - Math.floor(totalItems / itemsperpage));
     sliderElement.style.width = `${totalWidth}px`;
   };
 
@@ -262,7 +262,6 @@ const initializeSlider = () => {
   document.querySelector('.prevButton').addEventListener('click', () => moveSlide(-1));
   document.querySelector('.nextButton').addEventListener('click', () => moveSlide(1));
 
-  // Touch event handling for mobile
   let startX = 0;
   let endX = 0;
 
@@ -275,15 +274,14 @@ const initializeSlider = () => {
   });
 
   slider.addEventListener('touchend', () => {
-    const threshold = 50; // Minimum distance to be considered a swipe
+    const threshold = 50;
     if (startX - endX > threshold) {
-      moveSlide(1); // Swipe left
+      moveSlide(1);
     } else if (endX - startX > threshold) {
-      moveSlide(-1); // Swipe right
+      moveSlide(-1);
     }
   });
 
-  // Observe changes in the container's size
   const resizeObserver = new ResizeObserver(() => {
     styleSlider(slider);
     updateSlider();
