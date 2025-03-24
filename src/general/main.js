@@ -18,7 +18,7 @@ function main() {
       const container = document.getElementById('corel_container');
       counter++;
 
-      if (counter > 5) {
+      if (counter > 10) {
         clearInterval(renderInterval);
         return;
       }
@@ -38,7 +38,7 @@ function main() {
       });
 
       clearInterval(renderInterval);
-    }, 500);
+    }, 1000);
   });
 }
 main();
