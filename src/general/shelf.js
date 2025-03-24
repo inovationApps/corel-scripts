@@ -210,16 +210,15 @@ const initializeSlider = () => {
 
   const styleSlider = (sliderElement) => {
     const containerWidth = Math.floor(sliderElement.parentElement.clientWidth);
-    // Make the container width divisible by itemsperpage
     const adjustedContainerWidth = Math.floor(containerWidth / itemsperpage) * itemsperpage;
     const itemWidth = Math.floor(adjustedContainerWidth / itemsperpage) - margin;
 
-    items.forEach(item => {
+    items.forEach((item, index) => {
       item.style.width = `${itemWidth}px`;
-      item.style.marginRight = `${margin}px`;
+      item.style.marginRight = (index % itemsperpage === itemsperpage - 1) ? '0px' : `${margin}px`;
     });
 
-    const totalWidth = (itemWidth + margin) * totalItems;
+    const totalWidth = (itemWidth + margin) * totalItems - margin;
     sliderElement.style.width = `${totalWidth}px`;
   };
 
