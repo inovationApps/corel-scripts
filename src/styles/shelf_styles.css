@@ -1,58 +1,63 @@
-.shelfWrapper {
+#corel_container .shelfWrapper {
   position: relative;
   width: 100%;
   max-width: 600px;
   margin: auto;
-  overflow-x: hidden
+  overflow-x: hidden;
 }
 
-.sliderContainer {
+#corel_container .shelfWrapper .sliderContainer {
   display: flex;
   overflow: hidden;
   transition: transform 0.5s ease;
-}	
+}
 
-.shelfItem{
+#corel_container .shelfWrapper .shelfItem {
   position: relative;
 }
 
-.shelfItemImage {
+#corel_container .shelfWrapper .shelfItemImage {
   width: 100%;
   height: auto;
   display: flex;
   aspect-ratio: 1;
 }
 
-.shelfItemLink {
+#corel_container .shelfWrapper .shelfItemLink {
   position: absolute;
   inset: 0;
-  z-index: 0
+  z-index: 0;
 }
 
-.dotsContainer {
+#corel_container .shelfWrapper .dotsContainer {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-top: 10px;
 }
-.dot{
+
+#corel_container .shelfWrapper .dot {
   width: 5px;
   height: 5px;
   background-color: #ededed;
   border-radius: 100%;
   cursor: pointer;
 }
-.dot.active{
+
+#corel_container .shelfWrapper .dot.active {
   background-color: #000;
 }
-button{
+
+#corel_container .shelfWrapper button {
   cursor: pointer;
   position: absolute;
   top: 20px;
 }
-.prevButton{
+
+#corel_container .shelfWrapper .prevButton {
   right: 40px;
-}	
-.nextButton{
+}
+
+#corel_container .shelfWrapper .nextButton {
   right: 0;
-}	
+}
