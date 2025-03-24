@@ -1,4 +1,3 @@
-
 const getDataSetFromElement = (elementId) => {
   const element = document.querySelector(elementId);
   if (!element) {
@@ -211,14 +210,14 @@ const initializeSlider = () => {
   const styleSlider = (sliderElement) => {
     const containerWidth = Math.floor(sliderElement.parentElement.clientWidth);
     const adjustedContainerWidth = Math.floor(containerWidth / itemsperpage) * itemsperpage;
-    const itemWidth = Math.floor(adjustedContainerWidth / itemsperpage) - margin;
+    const itemWidth = Math.floor((adjustedContainerWidth - (margin * (itemsperpage - 1))) / itemsperpage);
 
-    items.forEach((item, index) => {
+    items.forEach(item => {
       item.style.width = `${itemWidth}px`;
-      item.style.marginRight = (index % itemsperpage === itemsperpage - 1) ? '0px' : `${margin}px`;
+      item.style.marginRight = `${margin}px`;
     });
 
-    const totalWidth = (itemWidth + margin) * totalItems - margin;
+    const totalWidth = (itemWidth + margin) * totalItems - margin; // Adjust total width calculation
     sliderElement.style.width = `${totalWidth}px`;
   };
 
