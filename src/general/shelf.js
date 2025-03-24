@@ -278,6 +278,14 @@ const initializeSlider = () => {
     }
   });
 
+  // Observe changes in the container's size
+  const resizeObserver = new ResizeObserver(() => {
+    styleSlider(slider);
+    updateSlider();
+  });
+
+  resizeObserver.observe(slider.parentElement);
+
   styleSlider(slider);
   createDots();
   updateSlider();
