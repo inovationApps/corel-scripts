@@ -41,9 +41,10 @@ function main() {
     }, 1000);
 
     const targetNode = document.querySelector('#corel_container');
-
+    console.log('targetNode', targetNode);
     if (targetNode) {
       const observer = new MutationObserver((mutations) => {
+        console.log('mutations', mutations);
         mutations.forEach((mutation) => {
           if (mutation.type === "attributes" && mutation.attributeName === "data-skuid") {
             console.log('mutation', mutation);	
