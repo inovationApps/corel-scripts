@@ -1,3 +1,4 @@
+
 const getDataSetFromElement = (elementId) => {
   const element = document.querySelector(elementId);
   if (!element) {
@@ -209,21 +210,22 @@ const initializeSlider = () => {
 
   const styleSlider = (sliderElement) => {
     const containerWidth = Math.floor(sliderElement.parentElement.clientWidth);
+    // Make the container width divisible by itemsperpage
     const adjustedContainerWidth = Math.floor(containerWidth / itemsperpage) * itemsperpage;
-    const itemWidth = Math.floor((adjustedContainerWidth - (margin * (itemsperpage - 1))) / itemsperpage);
+    const itemWidth = Math.floor(adjustedContainerWidth / itemsperpage) - margin;
 
     items.forEach(item => {
       item.style.width = `${itemWidth}px`;
       item.style.marginRight = `${margin}px`;
     });
 
-    const totalWidth = (itemWidth + margin) * totalItems - margin; // Adjust total width calculation
+    const totalWidth = (itemWidth + margin) * totalItems;
     sliderElement.style.width = `${totalWidth}px`;
   };
 
   const updateSlider = () => {
     const itemWidth = items[0].offsetWidth + margin;
-    const offset = -currentPage * (itemWidth + margin) * itemsperpage;
+    const offset = -currentPage * itemWidth * itemsperpage;
     slider.style.transform = `translateX(${offset}px)`;
     updateDots();
   };
@@ -260,7 +262,6 @@ const initializeSlider = () => {
   document.querySelector('.prevButton').addEventListener('click', () => moveSlide(-1));
   document.querySelector('.nextButton').addEventListener('click', () => moveSlide(1));
 
-  // Touch event handling for mobile
   let startX = 0;
   let endX = 0;
 
@@ -275,13 +276,12 @@ const initializeSlider = () => {
   slider.addEventListener('touchend', () => {
     const threshold = 50; // Minimum distance to be considered a swipe
     if (startX - endX > threshold) {
-      moveSlide(1); // Swipe left
+      moveSlide(1); 
     } else if (endX - startX > threshold) {
-      moveSlide(-1); // Swipe right
+      moveSlide(-1); 
     }
   });
 
-  // Observe changes in the container's size
   const resizeObserver = new ResizeObserver(() => {
     styleSlider(slider);
     updateSlider();

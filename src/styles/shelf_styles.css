@@ -1,7 +1,7 @@
 #corel_container .shelfWrapper {
   position: relative;
   width: 100%;
-  max-width: 600px;
+  max-width: 622px;
   margin: auto;
   overflow-x: hidden;
 }
@@ -10,6 +10,10 @@
   display: flex;
   overflow: hidden;
   transition: transform 0.5s ease;
+}
+
+#corel_container .shelfWrapper .shelfTitle {
+  margin-block: 1.33rem;
 }
 
 #corel_container .shelfWrapper .shelfItem {

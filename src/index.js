@@ -19,8 +19,8 @@ app.get('/main', (req, res) => {
             </head>
             <body>
                 <h1>JavaScript from Server</h1>
-                <div id='corel_container' data-skuId='489a8bef-d8f2-4af5-ac29-5fd24249c928' data-itemsFetched='20' data-imgSize='250-250' data-itemsPerPage='4' data-margin='10'></div>
-                <script src="/js/bundle.js" data-token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImUzNjMyMTc3LWM0NjktNGQ3MC1hNGRhLTU1ZDQwNWZjNTY0NCIsIm5iZiI6MTc0MjQ4OTE3OSwiZXhwIjoyNTM0MDIzMDA4MDAsImlhdCI6MTc0MjQ4OTE3OX0.qJeUajx0vOsomM2z0KwduWgEzbWf4hmy1m9mbqmcfkY"
+                <div id='corel_container' data-skuId='913' data-itemsFetched='20' data-imgSize='250-250' data-itemsPerPage='4' data-margin='10'></div>
+                <script src="/js/bundle.js" data-token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjYwYzAyZDM5LTkzYmEtNDU0Zi04ODEyLWMwNTNiNTk4Mjc1ZiIsIm5iZiI6MTc0MjU2Mjk2NCwiZXhwIjoyNTM0MDIzMDA4MDAsImlhdCI6MTc0MjU2Mjk2NH0.qv5iBoo0SZK_yknjsJbvPPnKR9uBKtTm-Aoe_EfgSQ4"
                 ></script> <!-- Correct path -->
             </body>
         </html> 
