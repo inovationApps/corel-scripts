@@ -71,7 +71,7 @@ function main() {
       mutations.forEach((mutation) => {
         if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
           const newTargetNode = document.getElementById('corel_container');
-          if (newTargetNode && location.href !== lastUrl) {
+          if (newTargetNode && location.href == lastUrl) {
             lastUrl = location.href;
             observer.disconnect();
             sendInteractionsToOrderVtex();
