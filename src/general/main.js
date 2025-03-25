@@ -34,9 +34,11 @@ function main() {
 
   //     clearInterval(renderInterval);
   //   }, 1000);
+  document.addEventListener('DOMContentLoaded', () => {
 
-  window.addEventListener('popstate', (event) => {
-    console.log('URL mudou!', window.location.href);
+    window.addEventListener('popstate', (event) => {
+      console.log('URL mudou!', window.location.href);
+    });
   });
   const watchNavigationVtex = () => {
     const targetNode = document.getElementById('corel_container');
