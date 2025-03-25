@@ -73,13 +73,32 @@ function main() {
         });
         observer.observe(targetNode, { attributes: true });
       } else {
+        console.log('else')
         const observer = new MutationObserver((mutations) => {
           mutations.forEach((mutation) => {
             if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
               const newTargetNode = document.getElementById('corel_container');
               if (newTargetNode) {
                 observer.disconnect();
-                watchNavigationVtex();
+                sendInteractionsToOrderVtex();
+                if (document?.getElementsByClassName('vtex-product-context-provider')) {
+                  mainProductPageView();
+                }
+                fetchProducts().then(promises => {
+                  if (
+                    promises[0].status === 'fulfilled'
+                  ) {
+                    if (document.querySelector('.shelfWrapper')) {
+                      document.querySelectorAll('.shelfWrapper').forEach((item) => {
+                        item.remove();
+                      });
+                    }
+                    renderShelf(promises[0]?.value);
+                  }
+                }).then(() => {
+                  initializeSlider();
+                  observerHandler();
+                });
               }
             }
           });
