@@ -199,7 +199,7 @@ const renderShelf = (data) => {
 
   // const initializeSlider = new Slider();
 };
-const initializeSlider = () => {
+initializeSlider = () => {
   const margin = parseInt(getDataSetFromElement('#corel_container')?.margin, 10);
   const itemsperpage = parseInt(getDataSetFromElement('#corel_container')?.itemsperpage, 10);
 
@@ -214,9 +214,17 @@ const initializeSlider = () => {
     const adjustedContainerWidth = Math.floor(containerWidth / itemsperpage) * itemsperpage;
     const itemWidth = Math.floor(adjustedContainerWidth / itemsperpage) - margin;
 
-    items.forEach(item => {
+    items.forEach((item, index) => {
       item.style.width = `${itemWidth}px`;
       item.style.marginRight = `${margin}px`;
+      // Hide items that overflow
+      if (index >= itemsperpage * (currentPage + 1)) {
+        setTimeout(() => {
+          item.style.display = 'none';
+        }, 700);
+      } else {
+        item.style.display = 'block';
+      }
     });
 
     const totalWidth = (itemWidth + margin) * totalItems;
@@ -228,6 +236,7 @@ const initializeSlider = () => {
     const offset = -currentPage * itemWidth * itemsperpage;
     slider.style.transform = `translateX(${offset}px)`;
     updateDots();
+    styleSlider(slider); // Ensure items are hidden/shown correctly on update
   };
 
   const createDots = () => {
@@ -276,9 +285,9 @@ const initializeSlider = () => {
   slider.addEventListener('touchend', () => {
     const threshold = 50; // Minimum distance to be considered a swipe
     if (startX - endX > threshold) {
-      moveSlide(1); 
+      moveSlide(1);
     } else if (endX - startX > threshold) {
-      moveSlide(-1); 
+      moveSlide(-1);
     }
   });
 
