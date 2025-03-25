@@ -36,38 +36,42 @@ function main() {
         initializeSlider();
         observerHandler();
       });
-
+      watchNavigationVtex();
       clearInterval(renderInterval);
     }, 1000);
 
-    const targetNode = document.querySelector('#corel_container');
-    console.log('targetNode', targetNode);
-    if (targetNode) {
-      const observer = new MutationObserver((mutations) => {
-        console.log('mutations', mutations);
-        mutations.forEach((mutation) => {
-          if (mutation.type === "attributes" && mutation.attributeName === "data-skuid") {
-            console.log('mutation', mutation);	
-            sendInteractionsToOrderVtex();
-            if (document?.getElementsByClassName('vtex-product-context-provider')) {
-              mainProductPageView();
-            }
-            fetchProducts().then(promises => {
-              if (
-                promises[0].status === 'fulfilled'
-              ) {
-                renderShelf(promises[0]?.value);
+    const watchNavigationVtex = () => {
+      const targetNode = document.getElementById('corel_container');
+      console.log('targetNode', targetNode);
+      if (targetNode) {
+        const observer = new MutationObserver((mutations) => {
+          console.log('mutations', mutations);
+          mutations.forEach((mutation) => {
+            if (mutation.type === "attributes" && mutation.attributeName === "data-skuid") {
+              console.log('mutation', mutation);
+              sendInteractionsToOrderVtex();
+              if (document?.getElementsByClassName('vtex-product-context-provider')) {
+                mainProductPageView();
               }
-            }).then(() => {
-              initializeSlider();
-              observerHandler();
-            });
-
-          }
+              fetchProducts().then(promises => {
+                if (
+                  promises[0].status === 'fulfilled'
+                ) {
+                  renderShelf(promises[0]?.value);
+                }
+              }).then(() => {
+                initializeSlider();
+                observerHandler();
+              });
+  
+            }
+          });
         });
-      });
-      observer.observe(targetNode, { attributes: true });
-    }
+        observer.observe(targetNode, { attributes: true });
+      }
+  
+    };
+
   });
 }
 main();
