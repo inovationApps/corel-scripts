@@ -5,7 +5,6 @@ const scriptTag = document.currentScript;
 const tenantToken = scriptTag.getAttribute("data-token");
 
 function main() {
-
   document.addEventListener('DOMContentLoaded', () => {
     sendInteractionsToOrderVtex();
     sessionHandler('normalSession');
@@ -14,10 +13,8 @@ function main() {
     }
     let counter = 0;
     const renderInterval = setInterval(async () => {
-
       const container = document.getElementById('corel_container');
       counter++;
-
       if (counter > 10) {
         clearInterval(renderInterval);
         return;
@@ -25,11 +22,8 @@ function main() {
       if (!container) {
         return;
       }
-
       fetchProducts().then(promises => {
-        if (
-          promises[0].status === 'fulfilled'
-        ) {
+        if (promises[0].status === 'fulfilled') {
           renderShelf(promises[0]?.value);
         }
       }).then(() => {
@@ -39,6 +33,7 @@ function main() {
       watchNavigationVtex();
       clearInterval(renderInterval);
     }, 1000);
+
     const watchNavigationVtex = () => {
       const targetNode = document.getElementById('corel_container');
       console.log('targetNode', targetNode);
@@ -53,9 +48,7 @@ function main() {
                 mainProductPageView();
               }
               fetchProducts().then(promises => {
-                if (
-                  promises[0].status === 'fulfilled'
-                ) {
+                if (promises[0].status === 'fulfilled') {
                   if (document.querySelector('.shelfWrapper')) {
                     document.querySelectorAll('.shelfWrapper').forEach((item) => {
                       item.remove();
@@ -67,13 +60,12 @@ function main() {
                 initializeSlider();
                 observerHandler();
               });
-
             }
           });
         });
         observer.observe(targetNode, { attributes: true });
       } else {
-        console.log('else')
+        console.log('else');
         const observer = new MutationObserver((mutations) => {
           mutations.forEach((mutation) => {
             if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
@@ -85,9 +77,7 @@ function main() {
                   mainProductPageView();
                 }
                 fetchProducts().then(promises => {
-                  if (
-                    promises[0].status === 'fulfilled'
-                  ) {
+                  if (promises[0].status === 'fulfilled') {
                     if (document.querySelector('.shelfWrapper')) {
                       document.querySelectorAll('.shelfWrapper').forEach((item) => {
                         item.remove();
@@ -106,9 +96,6 @@ function main() {
         observer.observe(document.body, { childList: true, subtree: true });
       }
     };
-
   });
 }
 main();
-
-//eventos de interação
