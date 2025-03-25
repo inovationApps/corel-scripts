@@ -16,6 +16,7 @@ function main() {
       const container = document.getElementById('corel_container');
       counter++;
       if (counter > 10) {
+        watchNavigationVtex();
         clearInterval(renderInterval);
         return;
       }
@@ -30,7 +31,7 @@ function main() {
         initializeSlider();
         observerHandler();
       });
-      watchNavigationVtex();
+      
       clearInterval(renderInterval);
     }, 1000);
 
