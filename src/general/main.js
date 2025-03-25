@@ -57,19 +57,24 @@ function main() {
                 if (
                   promises[0].status === 'fulfilled'
                 ) {
+                  if (document.querySelector('.shelfWrapper')) {
+                    document.querySelectorAll('.shelfWrapper').forEach((item) => {
+                      item.remove();
+                    });
+                  }
                   renderShelf(promises[0]?.value);
                 }
               }).then(() => {
                 initializeSlider();
                 observerHandler();
               });
-  
+
             }
           });
         });
         observer.observe(targetNode, { attributes: true });
       }
-  
+
     };
 
   });
