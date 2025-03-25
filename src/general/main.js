@@ -9,8 +9,8 @@ function main() {
   document.addEventListener('DOMContentLoaded', () => {
     sendInteractionsToOrderVtex();
     sessionHandler('normalSession');
-    if (document?.getElementsByClassName('vtex-product-context-provider')) { 
-      mainProductPageView()
+    if (document?.getElementsByClassName('vtex-product-context-provider')) {
+      mainProductPageView();
     }
     let counter = 0;
     const renderInterval = setInterval(async () => {
@@ -39,6 +39,34 @@ function main() {
 
       clearInterval(renderInterval);
     }, 1000);
+
+    const targetNode = document.querySelector('#corel_container');
+
+    if (targetNode) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === "attributes" && mutation.attributeName === "data-skuid") {
+            console.log('mutation', mutation);	
+            sendInteractionsToOrderVtex();
+            if (document?.getElementsByClassName('vtex-product-context-provider')) {
+              mainProductPageView();
+            }
+            fetchProducts().then(promises => {
+              if (
+                promises[0].status === 'fulfilled'
+              ) {
+                renderShelf(promises[0]?.value);
+              }
+            }).then(() => {
+              initializeSlider();
+              observerHandler();
+            });
+
+          }
+        });
+      });
+      observer.observe(targetNode, { attributes: true });
+    }
   });
 }
 main();
