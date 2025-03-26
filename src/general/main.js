@@ -36,60 +36,27 @@ function main() {
       const container = document.getElementById('corel_container');
       counter++;
       if (counter > 10) {
-        navigationWhileOnPdp();
         clearInterval(renderInterval);
         return;
       }
       if (!container) {
         return;
       }
+
+      // const observer = new MutationObserver((mutations) => {
+      //   mutations.forEach((mutation) => {
+      //     if (mutation.type === "attributes" && mutation.attributeName === "data-skuid") {
+      //       shelfFunctions();
+      //       console.log('change attr on div');
+      //     }
+      //   });
+      // });
+      // observer.observe(container, { attributes: true });
+
       shelfFunctions();
-      console.log('end normalPdpRender');
       clearInterval(renderInterval);
     }, 1000);
   };
-
-  const navigationPdpToPdp = () => {
-    console.log('render navigationPdpToPdp');
-    onLoadFunctions();
-    if (document?.getElementsByClassName('vtex-product-context-provider')) {
-      mainProductPageView();
-    }
-    const targetNode = document.getElementById('corel_container');
-    if (targetNode) {
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === "attributes" && mutation.attributeName === "data-skuid") {
-            shelfFunctions();
-            console.log('end navigationPdpToPdp');
-
-          }
-        });
-      });
-      observer.observe(targetNode, { attributes: true });
-    }
-  };
-  // });
-
-
-  document.addEventListener('DOMContentLoaded', () => {
-    normalPdpRender();
-    navigationPdpToPdp();
-
-    if (window.vtexjs && window.vtexjs.checkout && window.vtexjs.checkout.orderForm) {
-      console.log('load rodou esta bomba');
-    } else {
-      console.log('load nao rodou essa bomba');
-    }
-  });
-  if (window.vtexjs && window.vtexjs.checkout && window.vtexjs.checkout.orderForm) {
-    console.log('rodou esta bomba');
-  } else {
-    console.log('nao rodou essa bomba');
-  }
-  window.addEventListener('vtex:productView', () => {
-    console.log('vtex:productView', window.location.href);
-  });
 
   window.addEventListener("message", function (event) {
     if (!event.data || !event.data.eventName) return;
@@ -97,8 +64,13 @@ function main() {
     switch (event.data.eventName) {
       case "vtex:productView":
         console.log("Product viewed trough message");
+        normalPdpRender();
         break;
     }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    onLoadFunctions();
   });
 }
 main();
