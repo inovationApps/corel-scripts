@@ -75,6 +75,31 @@ function main() {
   document.addEventListener('DOMContentLoaded', () => {
     normalPdpRender();
     navigationPdpToPdp();
+    window.__RENDER_8_RUNTIME__.on('routeChange', (event) => {
+      console.log("  window.__RENDER_8_RUNTIME__ ");
+      console.log("  window.__RENDER_8_RUNTIME__ Navigated to:", event.path);
+    });
+
+    let oldPushState = history.pushState;
+    let oldReplaceState = history.replaceState;
+  
+    function handleNavigationChange() {
+      console.log("Page changed to:", window.location.pathname);
+      // Your custom logic here
+    }
+  
+    history.pushState = function () {
+      oldPushState.apply(history, arguments);
+      handleNavigationChange();
+    };
+  
+    history.replaceState = function () {
+      oldReplaceState.apply(history, arguments);
+      handleNavigationChange();
+    };
+  
+    window.addEventListener("popstate", handleNavigationChange);
+
   });
 }
 main();
