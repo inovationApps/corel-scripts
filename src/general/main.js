@@ -34,12 +34,7 @@ function main() {
 
   //     clearInterval(renderInterval);
   //   }, 1000);
-  document.addEventListener('DOMContentLoaded', () => {
 
-    window.addEventListener('popstate', (event) => {
-      console.log('URL mudou!', window.location.href);
-    });
-  });
   const watchNavigationVtex = () => {
     const targetNode = document.getElementById('corel_container');
     console.log('targetNode', targetNode);
@@ -72,9 +67,12 @@ function main() {
       observer.observe(targetNode, { attributes: true });
     } else {
       console.log('else');
+      const targetNode1 = document.getElementsByClassName('renderContainer');
+
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+          if (mutation.type === "attributes" && mutation.attributeName === "class"&& document.getElementsByClassName('renderContainer render-route-store-product').length > 0) {
+            console.log('has prod class')
             const newTargetNode = document.getElementById('corel_container');
             if (newTargetNode) {
               observer.disconnect();
@@ -99,7 +97,7 @@ function main() {
           }
         });
       });
-      observer.observe(document.body, { childList: true, subtree: true });
+      observer.observe(targetNode1, { attributes: true, attributeFilter: ['class'] });
     }
   };
   watchNavigationVtex();
