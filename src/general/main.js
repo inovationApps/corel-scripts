@@ -71,8 +71,8 @@ function main() {
 
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === "attributes" && mutation.attributeName === "class"&& document.getElementsByClassName('renderContainer render-route-store-product').length > 0) {
-            console.log('has prod class')
+          if (mutation.type === "attributes" && mutation.attributeName === "class" && document.getElementsByClassName('renderContainer render-route-store-product').length > 0) {
+            console.log('has prod class');
             const newTargetNode = document.getElementById('corel_container');
             if (newTargetNode) {
               observer.disconnect();
@@ -100,7 +100,11 @@ function main() {
       observer.observe(targetNode1, { attributes: true, attributeFilter: ['class'] });
     }
   };
-  watchNavigationVtex();
   // });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    watchNavigationVtex();
+  });
+
 }
 main();
