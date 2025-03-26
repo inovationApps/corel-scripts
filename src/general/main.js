@@ -75,29 +75,43 @@ function main() {
   document.addEventListener('DOMContentLoaded', () => {
     normalPdpRender();
     navigationPdpToPdp();
-    window.__RENDER_8_RUNTIME__.on('routeChange', (event) => {
-      console.log("  window.__RENDER_8_RUNTIME__ ");
-      console.log("  window.__RENDER_8_RUNTIME__ Navigated to:", event.path);
+    function waitForVTEXRuntime(callback) {
+      if (window.__RENDER_8_RUNTIME__) {
+        callback();
+      } else {
+        setTimeout(() => waitForVTEXRuntime(callback), 100);
+      }
+    }
+
+    waitForVTEXRuntime(() => {
+      console.log("VTEX Runtime detected!");
+
+      window.__RENDER_8_RUNTIME__.on('routeChange', (event) => {
+        console.log("VTEX Navigation Event Triggered!");
+        console.log("Navigated to:", event.path);
+      });
     });
+
 
     let oldPushState = history.pushState;
     let oldReplaceState = history.replaceState;
-  
+
     function handleNavigationChange() {
-      console.log("Page changed to:", window.location.pathname);
-      // Your custom logic here
+      setTimeout(() => {
+        console.log("Detected page change to:", window.location.pathname);
+      }, 50); // Small delay ensures React updates the URL first
     }
-  
+
     history.pushState = function () {
       oldPushState.apply(history, arguments);
       handleNavigationChange();
     };
-  
+
     history.replaceState = function () {
       oldReplaceState.apply(history, arguments);
       handleNavigationChange();
     };
-  
+
     window.addEventListener("popstate", handleNavigationChange);
 
   });
