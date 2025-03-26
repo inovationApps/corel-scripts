@@ -75,45 +75,18 @@ function main() {
   document.addEventListener('DOMContentLoaded', () => {
     normalPdpRender();
     navigationPdpToPdp();
-    function waitForVTEXRuntime(callback) {
-      if (window.__RENDER_8_RUNTIME__) {
-        callback();
-      } else {
-        setTimeout(() => waitForVTEXRuntime(callback), 100);
-      }
+
+    if (window.vtexjs && window.vtexjs.checkout && window.vtexjs.checkout.orderForm) {
+      console.log('load rodou esta bomba');
+    } else {
+      console.log('load nao rodou essa bomba');
     }
-
-    waitForVTEXRuntime(() => {
-      console.log("VTEX Runtime detected!");
-
-      window.__RENDER_8_RUNTIME__.on('routeChange', (event) => {
-        console.log("VTEX Navigation Event Triggered!");
-        console.log("Navigated to:", event.path);
-      });
-    });
-
-
-    let oldPushState = history.pushState;
-    let oldReplaceState = history.replaceState;
-
-    function handleNavigationChange() {
-      setTimeout(() => {
-        console.log("Detected page change to:", window.location.pathname);
-      }, 50); // Small delay ensures React updates the URL first
-    }
-
-    history.pushState = function () {
-      oldPushState.apply(history, arguments);
-      handleNavigationChange();
-    };
-
-    history.replaceState = function () {
-      oldReplaceState.apply(history, arguments);
-      handleNavigationChange();
-    };
-
-    window.addEventListener("popstate", handleNavigationChange);
-
   });
+  if (window.vtexjs && window.vtexjs.checkout && window.vtexjs.checkout.orderForm) {
+    console.log('rodou esta bomba');
+  } else {
+    console.log('nao rodou essa bomba');
+  }
+
 }
 main();
