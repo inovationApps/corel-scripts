@@ -60,10 +60,10 @@ function main() {
 
   window.addEventListener("message", function (event) {
     if (!event.data || !event.data.eventName) return;
-    console.log("VTEX Event Received:", event.data);
+    // console.log("VTEX Event Received:", event.data);
     switch (event.data.eventName) {
       case "vtex:productView":
-        console.log("Product viewed trough message");
+        // console.log("Product viewed trough message");
         normalPdpRender();
         break;
     }
