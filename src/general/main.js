@@ -87,6 +87,18 @@ function main() {
   } else {
     console.log('nao rodou essa bomba');
   }
+  window.addEventListener('vtex:productView', () => {
+    console.log('vtex:productView', window.location.href);
+  });
 
+  window.addEventListener("message", function (event) {
+    if (!event.data || !event.data.eventName) return;
+    console.log("VTEX Event Received:", event.data);
+    switch (event.data.eventName) {
+      case "vtex:productView":
+        console.log("Product viewed trough message");
+        break;
+    }
+  });
 }
 main();
