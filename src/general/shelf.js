@@ -214,14 +214,22 @@ initializeSlider = () => {
     const adjustedContainerWidth = Math.floor(containerWidth / itemsperpage) * itemsperpage;
     const itemWidth = Math.floor(adjustedContainerWidth / itemsperpage) - margin;
 
+    let hideTimeouts = []; // Store timeouts to clear them later
+
     items.forEach((item, index) => {
       item.style.width = `${itemWidth}px`;
       item.style.marginRight = `${margin}px`;
+
+      // Clear any existing timeout for this item
+      if (hideTimeouts[index]) {
+        clearTimeout(hideTimeouts[index]);
+      }
+
       // Hide items that overflow
       if (index >= itemsperpage * (currentPage + 1)) {
-        setTimeout(() => {
+        hideTimeouts[index] = setTimeout(() => {
           item.style.display = 'none';
-        }, 700);
+        }, 500);
       } else {
         item.style.display = 'block';
       }
