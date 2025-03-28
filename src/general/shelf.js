@@ -129,7 +129,16 @@ const saveClick = (link, origin) => {
   localStorage.setItem('currentShelfInteractions', JSON.stringify(body));
 };
 
-const renderShelf = (data) => {
+function verifyImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = src;
+  });
+}
+
+const renderShelf = async (data) => {
   const { imgsize } = getDataSetFromElement('#corel_container');
 
   const container = document.getElementById('corel_container');
@@ -154,7 +163,7 @@ const renderShelf = (data) => {
   shelfWrapper.appendChild(prevButton);
   shelfWrapper.appendChild(nextButton);
 
-  data.forEach((el, index) => {
+  for (const el of data){
     const item = document.createElement('div');
     item.className = 'shelfItem';
     item.setAttribute('sku_id', el?.externalId);
@@ -185,13 +194,18 @@ const renderShelf = (data) => {
     const name = document.createElement('p');
     name.className = 'shelfItemName';
     name.textContent = el?.name;
+    
 
     item.appendChild(img);
     item.appendChild(name);
     item.appendChild(link);
-
-    slider.appendChild(item);
-  });
+    if (await verifyImage(img.src)) {
+      console.log('true')
+      slider.appendChild(item);
+    } else {
+      console.log('false')
+    }
+  };
 
   shelfWrapper.appendChild(shelfTitle);
   shelfWrapper.appendChild(slider);
@@ -199,6 +213,7 @@ const renderShelf = (data) => {
 
   // const initializeSlider = new Slider();
 };
+
 initializeSlider = () => {
   const margin = parseInt(getDataSetFromElement('#corel_container')?.margin, 10);
   const itemsperpage = parseInt(getDataSetFromElement('#corel_container')?.itemsperpage, 10);

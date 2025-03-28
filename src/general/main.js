@@ -5,21 +5,20 @@ const scriptTag = document.currentScript;
 const tenantToken = scriptTag.getAttribute("data-token");
 
 function main() {
-  const shelfFunctions = () => {
-    fetchProducts().then(promises => {
-      if (promises[0].status === 'fulfilled') {
-        if (document.querySelector('.shelfWrapper')) {
-          document.querySelectorAll('.shelfWrapper').forEach((item) => {
-            item.remove();
-          });
-        }
-        renderShelf(promises[0]?.value);
+  const shelfFunctions = async () => {
+    const promises = await fetchProducts();
+    if (promises[0].status === 'fulfilled') {
+      if (document.querySelector('.shelfWrapper')) {
+        document.querySelectorAll('.shelfWrapper').forEach((item) => {
+          item.remove();
+        });
       }
-    }).then(() => {
-      initializeSlider();
-      observerHandler();
-    });
+      await renderShelf(promises[0]?.value); // Wait for renderShelf to complete
+      initializeSlider(); // This will now run after renderShelf finishes
+    }
+    observerHandler();
   };
+
   const onLoadFunctions = () => {
     sendInteractionsToOrderVtex();
     sessionHandler('normalSession');
