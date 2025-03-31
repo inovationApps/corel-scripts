@@ -163,7 +163,7 @@ const renderShelf = async (data) => {
   shelfWrapper.appendChild(prevButton);
   shelfWrapper.appendChild(nextButton);
 
-  for (const el of data){
+  for (const el of data) {
     const item = document.createElement('div');
     item.className = 'shelfItem';
     item.setAttribute('sku_id', el?.externalId);
@@ -194,16 +194,16 @@ const renderShelf = async (data) => {
     const name = document.createElement('p');
     name.className = 'shelfItemName';
     name.textContent = el?.name;
-    
+
 
     item.appendChild(img);
     item.appendChild(name);
     item.appendChild(link);
     if (await verifyImage(img.src)) {
-      console.log('true')
+      console.log('true');
       slider.appendChild(item);
     } else {
-      console.log('false')
+      console.log('false');
     }
   };
 
@@ -222,29 +222,29 @@ initializeSlider = () => {
   const items = slider.querySelectorAll('.shelfItem');
   const totalItems = items.length;
   let currentPage = 0;
+  let hideTimeouts = []; // Store timeouts to clear them later
 
-  const styleSlider = (sliderElement) => {
+  const styleSlider = (sliderElement,hideTimeouts) => {
     const containerWidth = Math.floor(sliderElement.parentElement.clientWidth);
-    // Make the container width divisible by itemsperpage
     const adjustedContainerWidth = Math.floor(containerWidth / itemsperpage) * itemsperpage;
     const itemWidth = Math.floor(adjustedContainerWidth / itemsperpage) - margin;
 
-    // let hideTimeouts = []; // Store timeouts to clear them later
+
+    // Clear any existing timeouts before processing items
+    if (hideTimeouts.length > 0) {
+      hideTimeouts.forEach(timeout => clearTimeout(timeout));
+      // hideTimeouts;
+    }
 
     items.forEach((item, index) => {
       item.style.width = `${itemWidth}px`;
       item.style.marginRight = `${margin}px`;
 
-      // Clear any existing timeout for this item
-      // if (hideTimeouts) {
-      //   clearTimeout(hideTimeouts);
-      // }
-
       // Hide items that overflow
       if (index >= itemsperpage * (currentPage + 1)) {
-        // hideTimeouts = setTimeout(() => {
+        hideTimeouts.push(setTimeout(() => {
           item.style.display = 'none';
-        // }, 1);
+        }, 500));
       } else {
         item.style.display = 'block';
       }
@@ -259,7 +259,7 @@ initializeSlider = () => {
     const offset = -currentPage * itemWidth * itemsperpage;
     slider.style.transform = `translateX(${offset}px)`;
     updateDots();
-    styleSlider(slider); // Ensure items are hidden/shown correctly on update
+    styleSlider(slider,hideTimeouts); // Ensure items are hidden/shown correctly on update
   };
 
   const createDots = () => {
@@ -315,13 +315,13 @@ initializeSlider = () => {
   });
 
   const resizeObserver = new ResizeObserver(() => {
-    styleSlider(slider);
+    styleSlider(slider,hideTimeouts);
     updateSlider();
   });
 
   resizeObserver.observe(slider.parentElement);
 
-  styleSlider(slider);
+  styleSlider(slider,hideTimeouts);
   createDots();
   updateSlider();
 };
