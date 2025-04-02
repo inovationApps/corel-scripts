@@ -76,7 +76,13 @@ const productViewHandler = (sku_id) => {
 const productClickHandler = (pageSkuId, sku, link, origin, position) => {
   saveClick(link, origin);
   sendClick(sku);
-  sendInteractionsToOrderVtex(pageSkuId, sku, origin, position);
+  obj = {
+    "pageSkuId": pageSkuId,
+    "skuId": sku,
+    "origin": origin,
+    "position": position
+  };
+  sendInteractionsToOrderVtex(JSON.stringify(obj));
 };
 
 const sendInteraction = async (sku, eventType) => {
@@ -164,7 +170,7 @@ const renderShelf = async (data) => {
   shelfWrapper.appendChild(prevButton);
   shelfWrapper.appendChild(nextButton);
 
-  let index =0
+  let index = 0;
   for (const el of data) {
     const item = document.createElement('div');
     item.className = 'shelfItem';
@@ -207,7 +213,7 @@ const renderShelf = async (data) => {
     } else {
       console.log('false');
     }
-    index++
+    index++;
   };
 
   shelfWrapper.appendChild(shelfTitle);
