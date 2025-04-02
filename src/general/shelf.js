@@ -75,8 +75,8 @@ const productViewHandler = (sku_id) => {
 
 const productClickHandler = (pageSkuId,sku, link, origin,position) => {
   saveClick(link, origin);
-  sendClick(pageSkuId,sku,origin,position);
-  sendInteractionsToOrderVtex()
+  sendClick(sku);
+  sendInteractionsToOrderVtex(pageSkuId,sku,origin,position)
 };
 
 const sendInteraction = async (sku, eventType) => {

@@ -20,7 +20,7 @@ function main() {
   };
 
   const onLoadFunctions = () => {
-    sendInteractionsToOrderVtex();
+    // sendInteractionsToOrderVtex();
     sessionHandler('normalSession');
   };
 
