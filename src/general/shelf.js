@@ -172,22 +172,23 @@ const renderShelf = async (data) => {
 
   let index = 0;
   for (const el of data) {
+    const currentIndex = index;
     const item = document.createElement('div');
     item.className = 'shelfItem';
     item.setAttribute('sku_id', el?.externalId);
     item.setAttribute('product_id', el?.externalProductId);
     item.addEventListener('click', () => {
-      productClickHandler(skuid, el?.externalId, el?.uri, '', index + 1);//precisa de origin na api
+      productClickHandler(skuid, el?.externalId, el?.uri, '', currentIndex + 1);//precisa de origin na api
       // sendConversion(el?.sku_id, pageSkuId, index, el?.origin);
     });
     item.addEventListener('auxclick', (e) => {
       if (e.button === 1 || (e.button === 0 && (e.ctrlKey || e.metaKey))) {
-        productClickHandler(skuid, el?.externalId, el?.uri, '', index + 1);//precisa de origin na api
+        productClickHandler(skuid, el?.externalId, el?.uri, '', currentIndex + 1);//precisa de origin na api
       }
     });
 
     item.addEventListener('contextmenu', (e) => {
-      productClickHandler(skuid, el?.externalId, el?.uri, '', index + 1);//precisa de origin na api
+      productClickHandler(skuid, el?.externalId, el?.uri, '', currentIndex + 1);//precisa de origin na api
     });
 
     const link = document.createElement('a');
