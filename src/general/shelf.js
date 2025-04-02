@@ -82,7 +82,7 @@ const productClickHandler = (pageSkuId, sku, link, origin, position) => {
     "origin": origin,
     "position": position
   };
-  sendInteractionsToOrderVtex(JSON.stringify(obj));
+  sendInteractionsToOrderVtex(obj);
 };
 
 const sendInteraction = async (sku, eventType) => {
