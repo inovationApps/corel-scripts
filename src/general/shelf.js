@@ -164,6 +164,7 @@ const renderShelf = async (data) => {
   shelfWrapper.appendChild(prevButton);
   shelfWrapper.appendChild(nextButton);
 
+  let index =0
   for (const el of data) {
     const item = document.createElement('div');
     item.className = 'shelfItem';
@@ -206,6 +207,7 @@ const renderShelf = async (data) => {
     } else {
       console.log('false');
     }
+    index++
   };
 
   shelfWrapper.appendChild(shelfTitle);
