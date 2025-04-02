@@ -73,9 +73,10 @@ const productViewHandler = (sku_id) => {
 };
 
 
-const productClickHandler = (sku, link, origin) => {
+const productClickHandler = (pageSkuId,sku, link, origin,position) => {
   saveClick(link, origin);
-  sendClick(sku);
+  sendClick(pageSkuId,sku,origin,position);
+  sendInteractionsToOrderVtex()
 };
 
 const sendInteraction = async (sku, eventType) => {
@@ -139,7 +140,7 @@ function verifyImage(src) {
 }
 
 const renderShelf = async (data) => {
-  const { imgsize } = getDataSetFromElement('#corel_container');
+  const { skuid, imgsize } = getDataSetFromElement('#corel_container');
 
   const container = document.getElementById('corel_container');
   const shelfWrapper = document.createElement('div');
@@ -169,17 +170,17 @@ const renderShelf = async (data) => {
     item.setAttribute('sku_id', el?.externalId);
     item.setAttribute('product_id', el?.externalProductId);
     item.addEventListener('click', () => {
-      productClickHandler(el?.externalId, el?.uri, 'upsell');//precisa de origin na api
+      productClickHandler(skuid,el?.externalId, el?.uri, '',index+1);//precisa de origin na api
       // sendConversion(el?.sku_id, pageSkuId, index, el?.origin);
     });
     item.addEventListener('auxclick', (e) => {
       if (e.button === 1 || (e.button === 0 && (e.ctrlKey || e.metaKey))) {
-        productClickHandler(el?.externalId, el?.uri, 'upsell');//precisa de origin na api
+        productClickHandler(skuid,el?.externalId, el?.uri, '',index+1);//precisa de origin na api
       }
     });
 
     item.addEventListener('contextmenu', (e) => {
-      productClickHandler(el?.externalId, el?.uri, 'upsell');//precisa de origin na api
+      productClickHandler(skuid,el?.externalId, el?.uri, '',index+1);//precisa de origin na api
     });
 
     const link = document.createElement('a');

@@ -36,5 +36,5 @@ const sendInteractionsToOrderVtex = (tag) => {
     let data = await fetchResponse.json();
     return data;
   }
-  postCustomData(tag);
+  postCustomData(tag)
 };

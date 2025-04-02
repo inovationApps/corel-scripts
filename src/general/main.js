@@ -27,9 +27,8 @@ function main() {
   const normalPdpRender = () => {
     console.log('render normalPdpRender');
     onLoadFunctions();
-    if (document?.getElementsByClassName('vtex-product-context-provider')) {
-      mainProductPageView();
-    }
+    mainProductPageView();
+    
     let counter = 0;
     const renderInterval = setInterval(async () => {
       const container = document.getElementById('corel_container');

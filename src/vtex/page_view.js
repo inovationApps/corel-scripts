@@ -8,19 +8,20 @@ const mainProductPageView = () => {
         'Content-Type': 'application/json; charset=utf-8'
       },
       'body': JSON.stringify({
-        // "tenantId": tenantToken,
-        "tenantId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "page": page,
-        "origin": origin
+        // "page": page,
+        // "origin": origin
+        "externalSessionId": "string",
+        "externalSkuId": "string",
+        "externalFromSkuId": "string"
       })
     };
 
     try {
       console.log('aqui sera o post pageview')
-      // const response = await fetch(`${baseUrl}v1/sessions`, options);//mudar endpoint
-      // if (!response.ok) {
-      //   throw new Error('Network response was not ok');
-      // }
+      const response = await fetch(`${baseUrl}v1/page-views`, options);//mudar endpoint
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
     } catch (error) {
       console.error('Fetch error:', error);
     }
