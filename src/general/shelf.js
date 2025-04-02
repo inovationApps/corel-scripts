@@ -73,10 +73,10 @@ const productViewHandler = (sku_id) => {
 };
 
 
-const productClickHandler = (pageSkuId,sku, link, origin,position) => {
+const productClickHandler = (pageSkuId, sku, link, origin, position) => {
   saveClick(link, origin);
   sendClick(sku);
-  sendInteractionsToOrderVtex(pageSkuId,sku,origin,position)
+  sendInteractionsToOrderVtex(pageSkuId, sku, origin, position);
 };
 
 const sendInteraction = async (sku, eventType) => {
@@ -170,17 +170,17 @@ const renderShelf = async (data) => {
     item.setAttribute('sku_id', el?.externalId);
     item.setAttribute('product_id', el?.externalProductId);
     item.addEventListener('click', () => {
-      productClickHandler(skuid,el?.externalId, el?.uri, '',index+1);//precisa de origin na api
+      productClickHandler(skuid, el?.externalId, el?.uri, '', index + 1);//precisa de origin na api
       // sendConversion(el?.sku_id, pageSkuId, index, el?.origin);
     });
     item.addEventListener('auxclick', (e) => {
       if (e.button === 1 || (e.button === 0 && (e.ctrlKey || e.metaKey))) {
-        productClickHandler(skuid,el?.externalId, el?.uri, '',index+1);//precisa de origin na api
+        productClickHandler(skuid, el?.externalId, el?.uri, '', index + 1);//precisa de origin na api
       }
     });
 
     item.addEventListener('contextmenu', (e) => {
-      productClickHandler(skuid,el?.externalId, el?.uri, '',index+1);//precisa de origin na api
+      productClickHandler(skuid, el?.externalId, el?.uri, '', index + 1);//precisa de origin na api
     });
 
     const link = document.createElement('a');
@@ -225,7 +225,7 @@ initializeSlider = () => {
   let currentPage = 0;
   let hideTimeouts = []; // Store timeouts to clear them later
 
-  const styleSlider = (sliderElement,hideTimeouts) => {
+  const styleSlider = (sliderElement, hideTimeouts) => {
     const containerWidth = Math.floor(sliderElement.parentElement.clientWidth);
     const adjustedContainerWidth = Math.floor(containerWidth / itemsperpage) * itemsperpage;
     const itemWidth = Math.floor(adjustedContainerWidth / itemsperpage) - margin;
@@ -260,7 +260,7 @@ initializeSlider = () => {
     const offset = -currentPage * itemWidth * itemsperpage;
     slider.style.transform = `translateX(${offset}px)`;
     updateDots();
-    styleSlider(slider,hideTimeouts); // Ensure items are hidden/shown correctly on update
+    styleSlider(slider, hideTimeouts); // Ensure items are hidden/shown correctly on update
   };
 
   const createDots = () => {
@@ -316,13 +316,13 @@ initializeSlider = () => {
   });
 
   const resizeObserver = new ResizeObserver(() => {
-    styleSlider(slider,hideTimeouts);
+    styleSlider(slider, hideTimeouts);
     updateSlider();
   });
 
   resizeObserver.observe(slider.parentElement);
 
-  styleSlider(slider,hideTimeouts);
+  styleSlider(slider, hideTimeouts);
   createDots();
   updateSlider();
 };
