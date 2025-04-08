@@ -58,7 +58,7 @@ const productViewHandler = (sku_id) => {
 
   let hasTriggered = false;
   const sendView = async () => {
-    sendInteraction(sku_id, 0);
+    sendInteraction(sku_id, 1);
     sessionHandler('shelfSession');
   };
 
@@ -112,7 +112,7 @@ const sendInteraction = async (sku, eventType) => {
 };
 
 const sendClick = async (sku) => {
-  sendInteraction(sku, 1);
+  sendInteraction(sku, 0);
 };
 
 const saveClick = (link, origin) => {
