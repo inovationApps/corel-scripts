@@ -29,8 +29,6 @@ const sendSession = async (sessionId, shelfViewed = false, version = '') => {
       'Content-Type': 'application/json; charset=utf-8'
     },
     'body': JSON.stringify({
-      // "tenantId": tenantToken,
-      // "tenantId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       "externalId": sessionId,
       "externalTestId": version,
       "isShowcaseSeen": shelfViewed
@@ -49,7 +47,6 @@ const sendSession = async (sessionId, shelfViewed = false, version = '') => {
 
 const sessionHandler = async (sessionType) => {
   const sessionId = await getSession();
-  // const sessionId = '7fae9e4c-22ec-4993-8d51-063b62b35c6d';
   const sessionStorageSessionId = sessionStorage.getItem(sessionType);
   if (!sessionStorageSessionId || sessionStorageSessionId !== sessionId) {
     sessionStorage.setItem(sessionType, sessionId);

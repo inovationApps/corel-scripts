@@ -1,5 +1,7 @@
 const mainProductPageView = () => {
   const sendPageViews = async (page, origin = '') => {
+    const sessionId = await getSession();
+
     const options = {
       'method': 'POST',
       'keepalive': true,
@@ -9,8 +11,8 @@ const mainProductPageView = () => {
       },
       'body': JSON.stringify({
         // "page": page,
-        // "origin": origin
-        "externalSessionId": "string",
+        "origin": origin,
+        "externalSessionId": sessionId,
         "externalSkuId": "string",
         "externalFromSkuId": "string"
       })

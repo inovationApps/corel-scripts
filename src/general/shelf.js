@@ -86,6 +86,8 @@ const productClickHandler = (pageSkuId, sku, link, origin, position) => {
 };
 
 const sendInteraction = async (sku, eventType) => {
+
+  const sessionId = await getSession();
   const options = {
     'method': 'POST',
     'keepalive': true,
@@ -94,12 +96,12 @@ const sendInteraction = async (sku, eventType) => {
       'Content-Type': 'application/json; charset=utf-8'
     },
     'body': JSON.stringify({
-      "tenantId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      // "tenantId": tenantToken,
+      "sessionId": sessionId,
       "externalId": sku,
       "eventType": eventType
     })
   };
+
 
   try {
     const response = await fetch(`${baseUrl}v1/sku-events`, options);
