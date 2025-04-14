@@ -45,7 +45,8 @@ const mainProductPageView = () => {
     const item = data[i];
     if (item?.originUrl === normalizeReferrer && item?.targetUrl === window?.location?.pathname) {
       data.pop(item);
-      sendPageViews('product',item?.origin)
+      const origin= item?.origin || 'shelf';
+      sendPageViews('product',origin)
       allItemsFailed = false;
     } else {
       item.readCount = item.readCount + 1;
