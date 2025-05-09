@@ -1,6 +1,6 @@
 
 // const baseUrl = 'http://localhost:5250/';
-const baseUrl = 'https://api.cuboapp.net/';
+const baseUrl = 'https://performance.api.cuboapp.net/';
 const scriptTag = document.currentScript;
 const tenantToken = scriptTag.getAttribute("data-token");
 
