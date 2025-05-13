@@ -46,7 +46,7 @@ const observerHandler = () => {
 
   items.forEach((item, index) => {
     if (item) {
-      const observer = productViewHandler(item.getAttribute('sku_id'));
+      const observer = productViewHandler(item.getAttribute('sku_id'), item.getAttribute('recommendationAlgorithm'));
       observer.observe(item);
       return observer;
     }
@@ -54,11 +54,10 @@ const observerHandler = () => {
   });
 };
 
-const productViewHandler = (sku_id) => {
-
+const productViewHandler = (sku_id,recommendationAlgorithm) => {
   let hasTriggered = false;
   const sendView = async () => {
-    sendInteraction(sku_id, 1);
+    sendInteraction(sku_id, 1, recommendationAlgorithm);
     sessionHandler('shelfSession');
   };
 
@@ -73,20 +72,19 @@ const productViewHandler = (sku_id) => {
 };
 
 
-const productClickHandler = (pageSkuId, sku, link, origin, position) => {
-  saveClick(link, origin);
-  sendClick(sku);
+const productClickHandler = (pageSkuId, sku, link, recommendationAlgorithm, position) => {
+  saveClick(link, recommendationAlgorithm);
+  sendClick(sku,recommendationAlgorithm);
   obj = {
     "pageSkuId": pageSkuId,
     "skuId": sku,
-    "origin": origin,
+    "origin": recommendationAlgorithm,
     "position": position
   };
   sendInteractionsToOrderVtex(obj);
 };
 
-const sendInteraction = async (sku, eventType) => {
-
+const sendInteraction = async (sku, eventType, recommendationAlgorithm) => {
   const sessionId = await getSession();
   const options = {
     'method': 'POST',
@@ -96,9 +94,10 @@ const sendInteraction = async (sku, eventType) => {
       'Content-Type': 'application/json; charset=utf-8'
     },
     'body': JSON.stringify({
-      "sessionId": sessionId,
+      "externalSessionId": sessionId,
       "externalId": sku,
-      "eventType": eventType
+      "eventType": eventType,
+      "recommendationAlgorithm":recommendationAlgorithm
     })
   };
 
@@ -113,17 +112,17 @@ const sendInteraction = async (sku, eventType) => {
   }
 };
 
-const sendClick = async (sku) => {
-  sendInteraction(sku, 0);
+const sendClick = async (sku, recommendationAlgorithm) => {
+  sendInteraction(sku, 0, recommendationAlgorithm);
 };
 
-const saveClick = (link, origin) => {
+const saveClick = (link, recommendationAlgorithm) => {
   const presentUrl = window?.location?.pathname;
   const futureUrl = link;
   const urlsObj = {
     'originUrl': presentUrl,
     'targetUrl': futureUrl,
-    'origin': origin,
+    'origin': recommendationAlgorithm,
     'readCount': 0
   };
   let body;
@@ -174,23 +173,25 @@ const renderShelf = async (data) => {
 
   let index = 0;
   for (const el of data) {
+    console.log('el', el);
     const currentIndex = index;
     const item = document.createElement('div');
     item.className = 'shelfItem';
     item.setAttribute('sku_id', el?.externalId);
-    item.setAttribute('product_id', el?.externalProductId);
+    item.setAttribute('sku_id', el?.externalId);
+    item.setAttribute('recommendationAlgorithm', el?.recommendationAlgorithm);
     item.addEventListener('click', () => {
-      productClickHandler(skuid, el?.externalId, el?.uri, '', currentIndex + 1);//precisa de origin na api
+      productClickHandler(skuid, el?.externalId, el?.uri, el?.recommendationAlgorithm, currentIndex + 1);//precisa de origin na api
       // sendConversion(el?.sku_id, pageSkuId, index, el?.origin);
     });
     item.addEventListener('auxclick', (e) => {
       if (e.button === 1 || (e.button === 0 && (e.ctrlKey || e.metaKey))) {
-        productClickHandler(skuid, el?.externalId, el?.uri, '', currentIndex + 1);//precisa de origin na api
+        productClickHandler(skuid, el?.externalId, el?.uri, el?.recommendationAlgorithm, currentIndex + 1);//precisa de origin na api
       }
     });
 
     item.addEventListener('contextmenu', (e) => {
-      productClickHandler(skuid, el?.externalId, el?.uri, '', currentIndex + 1);//precisa de origin na api
+      productClickHandler(skuid, el?.externalId, el?.uri, el?.recommendationAlgorithm, currentIndex + 1);//precisa de origin na api
     });
 
     const link = document.createElement('a');

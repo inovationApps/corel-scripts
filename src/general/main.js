@@ -1,10 +1,12 @@
 
 // const baseUrl = 'http://localhost:5250/';
-const baseUrl = 'https://performance.api.cuboapp.net/';
 const scriptTag = document.currentScript;
-const tenantToken = scriptTag.getAttribute("data-token");
+const version = scriptTag.getAttribute("data-version");
+let baseUrl = 'https://performance.api.cuboapp.net/';
+let tenantToken = scriptTag.getAttribute("data-token");
 
 function main() {
+  console.log('main',baseUrl,tenantToken);
   const shelfFunctions = async () => {
     const promises = await fetchProducts();
     if (promises[0].status === 'fulfilled') {
@@ -28,7 +30,7 @@ function main() {
     console.log('render normalPdpRender');
     onLoadFunctions();
     mainProductPageView();
-    
+
     let counter = 0;
     const renderInterval = setInterval(async () => {
       const container = document.getElementById('corel_container');
@@ -56,13 +58,21 @@ function main() {
     }, 1000);
   };
 
+  let currentProdId;
+
   window.addEventListener("message", function (event) {
     if (!event.data || !event.data.eventName) return;
     // console.log("VTEX Event Received:", event.data);
     switch (event.data.eventName) {
       case "vtex:productView":
-        // console.log("Product viewed trough message");
-        normalPdpRender();
+
+        const productIdEvent = parseInt(event.data.product.productId);
+        if (productIdEvent !== currentProdId) {
+
+          currentProdId = event.data.product.productId;
+
+          normalPdpRender();
+        }
         break;
     }
   });
@@ -71,4 +81,22 @@ function main() {
     onLoadFunctions();
   });
 }
-main();
+
+
+
+function abVersionHandler() {
+    if (version=='a') {
+      console.log("Master workspace");
+      baseUrl = 'https://api.cuboapp.net/';
+      tenantToken = scriptTag.getAttribute("data-token0");
+      // main();
+    }
+    if (version=='b') {
+      console.log("other workspace");
+      baseUrl = 'https://performance.api.cuboapp.net/';
+      tenantToken = scriptTag.getAttribute("data-token1");
+      main();
+    }
+}
+
+abVersionHandler()
