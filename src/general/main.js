@@ -1,9 +1,9 @@
 
 // const baseUrl = 'http://localhost:5250/';
-const scriptTag = document.currentScript;
-const version = scriptTag.getAttribute("data-version");
+const scriptTagEl = document.currentScript;
+const version = scriptTagEl.getAttribute("data-version");
 let baseUrl = 'https://performance.api.cuboapp.net/';
-let tenantToken = scriptTag.getAttribute("data-token");
+let tenantToken = scriptTagEl.getAttribute("data-token");
 
 function main() {
   console.log('main',baseUrl,tenantToken);
@@ -88,15 +88,16 @@ function abVersionHandler() {
     if (version=='a') {
       console.log("Master workspace");
       baseUrl = 'https://api.cuboapp.net/';
-      tenantToken = scriptTag.getAttribute("data-token0");
+      tenantToken = scriptTagEl.getAttribute("data-token0");
       // main();
     }
     if (version=='b') {
       console.log("other workspace");
       baseUrl = 'https://performance.api.cuboapp.net/';
-      tenantToken = scriptTag.getAttribute("data-token1");
+      tenantToken = scriptTagEl.getAttribute("data-token1");
       main();
     }
+  console.log("version", version);
 }
 
 abVersionHandler()
