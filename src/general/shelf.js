@@ -85,7 +85,9 @@ const productClickHandler = (pageSkuId, sku, link, recommendationAlgorithm, posi
 };
 
 const sendInteraction = async (sku, eventType, recommendationAlgorithm) => {
-  const sessionId = await getSession();
+  // const sessionId = await getSession();
+  const orderForm= window?.localStorage?.getItem('orderform');
+const orderFormId = JSON.parse(orderForm)?.id;
   const options = {
     'method': 'POST',
     'keepalive': true,
@@ -94,7 +96,7 @@ const sendInteraction = async (sku, eventType, recommendationAlgorithm) => {
       'Content-Type': 'application/json; charset=utf-8'
     },
     'body': JSON.stringify({
-      "externalSessionId": sessionId,
+      "externalSessionId": orderFormId,
       "externalId": sku,
       "eventType": eventType,
       "recommendationAlgorithm":recommendationAlgorithm

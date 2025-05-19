@@ -1,7 +1,8 @@
 const mainProductPageView = () => {
   const sendPageViews = async (page, origin = '') => {
-    const sessionId = await getSession();
-
+    // const sessionId = await getSession();
+    const orderForm = window?.localStorage?.getItem('orderform');
+    const orderFormId = JSON.parse(orderForm)?.id;
     const options = {
       'method': 'POST',
       'keepalive': true,
@@ -12,14 +13,14 @@ const mainProductPageView = () => {
       'body': JSON.stringify({
         // "page": page,
         "origin": origin,
-        "externalSessionId": sessionId,
+        "externalSessionId": orderFormId,
         "externalSkuId": "string",
         "externalFromSkuId": "string"
       })
     };
 
     try {
-      console.log('aqui sera o post pageview')
+      console.log('aqui sera o post pageview');
       const response = await fetch(`${baseUrl}v1/page-views`, options);//mudar endpoint
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -36,7 +37,7 @@ const mainProductPageView = () => {
 
   const data = getCurrentData();
   if (!data) {
-    sendPageViews('product','')
+    sendPageViews('product', '');
     return null;
   }
   const normalizeReferrer = document.referrer.replace(window?.location?.origin, '');
@@ -45,8 +46,8 @@ const mainProductPageView = () => {
     const item = data[i];
     if (item?.originUrl === normalizeReferrer && item?.targetUrl === window?.location?.pathname) {
       data.pop(item);
-      const origin= item?.origin || 'shelf';
-      sendPageViews('product',origin)
+      const origin = item?.origin || 'shelf';
+      sendPageViews('product', origin);
       allItemsFailed = false;
     } else {
       item.readCount = item.readCount + 1;
@@ -57,7 +58,7 @@ const mainProductPageView = () => {
   }
 
   if (allItemsFailed) {
-    sendPageViews('product','')
+    sendPageViews('product', '');
   }
 
   localStorage.setItem('currentShelfInteractions', JSON.stringify(data));

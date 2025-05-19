@@ -1,24 +1,24 @@
-const getSession = async () => {
-  const options = {
-    'method': 'GET',
-    'keepalive': true,
-    'headers': {
-      'content-type': 'application/json'
-    }
-  };
+// const getSession = async () => {
+//   const options = {
+//     'method': 'GET',
+//     'keepalive': true,
+//     'headers': {
+//       'content-type': 'application/json'
+//     }
+//   };
 
-  try {
-    const response = await fetch(`/api/sessions?items=id`, options);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const result = await response.json();
+//   try {
+//     const response = await fetch(`/api/sessions?items=id`, options);
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     const result = await response.json();
 
-    return result.id;
-  } catch (error) {
-    console.error('Fetch error:', error);
-  }
-};
+//     return result.id;
+//   } catch (error) {
+//     console.error('Fetch error:', error);
+//   }
+// };
 
 const sendSession = async (sessionId, shelfViewed = false, version = '') => {
   const options = {
@@ -29,7 +29,7 @@ const sendSession = async (sessionId, shelfViewed = false, version = '') => {
       'Content-Type': 'application/json; charset=utf-8'
     },
     'body': JSON.stringify({
-      "externalId": sessionId,
+      "externalId": orderFormId,
       "externalTestId": version,
       "isShowcaseSeen": shelfViewed
     })
@@ -46,14 +46,16 @@ const sendSession = async (sessionId, shelfViewed = false, version = '') => {
 };
 
 const sessionHandler = async (sessionType) => {
-  const sessionId = await getSession();
+  // const sessionId = await getSession();
+  const orderForm= window?.localStorage?.getItem('orderform');
+const orderFormId = JSON.parse(orderForm)?.id;
   const sessionStorageSessionId = sessionStorage.getItem(sessionType);
   if (!sessionStorageSessionId || sessionStorageSessionId !== sessionId) {
-    sessionStorage.setItem(sessionType, sessionId);
+    sessionStorage.setItem(sessionType, orderFormId);
     if (sessionType === 'normalSession') {
-      sendSession(sessionId);
+      sendSession(orderFormId);
     } else if (sessionType === 'shelfSession') {
-      sendSession(sessionId, true);
+      sendSession(orderFormId, true);
     }
   }
 };

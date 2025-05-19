@@ -3,7 +3,7 @@
 const scriptTagEl = document.currentScript;
 const version = scriptTagEl.getAttribute("data-version");
 let baseUrl = 'https://performance.api.cuboapp.net/';
-let tenantToken = scriptTagEl.getAttribute("data-token");
+let tenantToken = scriptTagEl.getAttribute("data-token0");
 
 function main() {
   console.log('main',baseUrl,tenantToken);
@@ -62,7 +62,7 @@ function main() {
 
   window.addEventListener("message", function (event) {
     if (!event.data || !event.data.eventName) return;
-    // console.log("VTEX Event Received:", event.data);
+    console.log("VTEX Event Received:", event.data);
     switch (event.data.eventName) {
       case "vtex:productView":
 
@@ -93,7 +93,7 @@ function abVersionHandler() {
     }
     if (version=='b') {
       console.log("other workspace");
-      baseUrl = 'https://performance.api.cuboapp.net/';
+      baseUrl = 'https://performance.api.inovacao.wecode.digital/';
       tenantToken = scriptTagEl.getAttribute("data-token1");
       main();
     }
